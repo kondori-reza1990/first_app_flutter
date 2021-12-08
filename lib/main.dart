@@ -31,9 +31,9 @@ class _MyAppState extends State<MyApp> {
               "Body $count",
               style: TextStyle(color: color, fontSize: 18),
             ),
-            Text("My Flutter Project..."),
-            Text("Hello World"),
-            FlutterLogo(size: 300,)
+            const Text("My Flutter Project..."),
+            const Text("Hello World"),
+            const FlutterLogo(size: 300,)
           ],
         ),
         floatingActionButton: FloatingActionButton(
