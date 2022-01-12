@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lottie/lottie.dart';
 
 void main() => runApp(const MyApp());
 
@@ -44,6 +45,20 @@ class _MyAppState extends State<MyApp> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              FittedBox(
+                fit: BoxFit.contain,
+                child: Text(
+                  "My Demo Application",
+                  style: TextStyle(
+                      color: color,
+                      fontSize: 50,
+                      fontFamily: "fontName"
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 35,
+              ),
               TextField(
                 style: const TextStyle(fontFamily: "fontName"),
                 textInputAction: TextInputAction.next,
@@ -134,7 +149,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
+          child: Lottie.asset("assets/color.json"),
           onPressed: () {
             setState(() {
               count++;
