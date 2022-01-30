@@ -3,7 +3,12 @@ class Assets {
   Assets._();
 
   static const String assetsColor = 'assets/color.json';
+  static const String assetsFour = 'assets/four.png';
+  static const String assetsIcon = 'assets/icon.png';
   static const String assetsLogo = 'assets/logo.png';
+  static const String assetsOne = 'assets/one.png';
+  static const String assetsThree = 'assets/three.png';
+  static const String assetsTwo = 'assets/two.png';
   static const String fontsBarcelona = 'assets/fonts/Barcelona.ttf';
 
 }

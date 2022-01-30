@@ -1,163 +1,92 @@
+import 'dart:ffi';
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:first_app/fourth_page.dart';
+import 'package:first_app/second_page.dart';
+import 'package:first_app/third_page.dart';
+import 'package:flurry_navigation/flurry_menu.dart';
+import 'package:flurry_navigation/flurry_navigation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
 
+import 'bottom_section.dart';
+import 'first_page.dart';
+
 void main() => runApp(const MyApp());
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  _MyAppState createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: HomePage(),
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
-  int count = 0;
-  Color color = Colors.red;
-  String text = "";
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
-  final FocusNode _focusNode = FocusNode();
-  final TextEditingController _controller = TextEditingController();
-  final FocusNode _focusNode1 = FocusNode();
-  final TextEditingController _controller1 = TextEditingController();
   @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  var activeScreen = firstscreen;
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              FlutterLogo(size: 35,),
-              Text("Title Demo With Row",
-              style: TextStyle(fontFamily: "fontName"),)
-            ],
-          )
+    return FlurryNavigation(
+      curveRadius: (MediaQuery.of(context).size.width *MediaQuery.of(context).size.height)/4980,
+      expandIcon: Image.asset("assets/icon.png"),
+      iconSize: ((MediaQuery.of(context).size.width * MediaQuery.of(context).size.height)/15420),
+      contentScreen: activeScreen,
+      menuScreen: FlurryMenu(
+        bgColor: const Color.fromRGBO(121, 134, 203, 1),
+        bottomSection: BottomSection(),
+        menu: SideMenu(
+          items: [
+            SideMenuItem(
+                id:'p1',
+                icon:'assets/one.png',
+                isSelected: true,
+                selectedBtnColor: const Color.fromRGBO(38, 198, 218, 1),
+                btnShape: BoxShape.rectangle),
+            SideMenuItem(
+                id: 'p2',
+                icon: 'assets/two.png',
+                isSelected: false,
+                selectedBtnColor: const Color.fromRGBO(38, 198, 218, 1),
+                btnShape: BoxShape.rectangle),
+            SideMenuItem(
+              id:'p3',
+              icon:'assets/three.png',
+              isSelected: false,
+              selectedBtnColor: const Color.fromRGBO(38, 198, 218, 1),
+            ),
+            SideMenuItem(
+              id:'p4',
+              icon:'assets/four.png',
+              isSelected:false,
+              selectedBtnColor:const Color.fromRGBO(38, 198, 218, 1),
+            ),
+          ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              FittedBox(
-                fit: BoxFit.contain,
-                child: Text(
-                  "My Demo Application",
-                  style: TextStyle(
-                      color: color,
-                      fontSize: 50,
-                      fontFamily: "fontName"
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 35,
-              ),
-              TextField(
-                style: const TextStyle(fontFamily: "fontName"),
-                textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Name',
-                  hintText: 'Please Enter name'
-                ),
-                focusNode: _focusNode,
-                autofocus: true,
-                controller: _controller,
-                enabled: true,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
-                ],
-                keyboardType: TextInputType.text,
-                minLines: 1,
-                maxLength: 5,
-                obscureText: false,
-                obscuringCharacter: "*",
-                onChanged: (value) {
-                  setState(() {
-                    text = value;
-                  });
-                },
-                onSubmitted: (value) {
-                  _focusNode1.nextFocus();
-                },
-                onEditingComplete: () {
-
-                },
-                onTap: () {
-
-                },
-                readOnly: false,
-                textAlign: TextAlign.start,
-                textDirection: TextDirection.ltr,
-              ),
-              TextField(
-                style: const TextStyle(fontFamily: "fontName"),
-                textInputAction: TextInputAction.done,
-                decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Family',
-                    hintText: 'Please Enter family'
-                ),
-                focusNode: _focusNode1,
-                autofocus: true,
-                controller: _controller1,
-                enabled: true,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
-                ],
-                keyboardType: TextInputType.text,
-                minLines: 1,
-                maxLength: 20,
-                obscureText: false,
-                obscuringCharacter: "*",
-                onChanged: (value) {
-                  setState(() {
-                    text = value;
-                  });
-                },
-                onSubmitted: (value) {
-                  setState(() {
-                    text = _controller.text + " " + _controller1.text;
-                  });
-                },
-                onEditingComplete: () {
-
-                },
-                onTap: () {
-
-                },
-                readOnly: false,
-                textAlign: TextAlign.start,
-                textDirection: TextDirection.ltr,
-              ),
-              Text(
-                "Body $count, $text",
-                style: TextStyle(
-                    color: color,
-                    fontSize: 25,
-                  fontFamily: "fontName"
-                ),
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: Lottie.asset("assets/color.json"),
-          onPressed: () {
-            setState(() {
-              count++;
-              color = Color(Random().nextInt(
-                  0xffffffff)); //Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
-            });
-          },
-        ),
+        onMenuItemSelected: (String? itemId) {
+          if (itemId == 'p1') {
+            setState(() => activeScreen = firstscreen);
+          } else if (itemId == 'p2') {
+            setState(() => activeScreen = secondscreen);
+          } else if (itemId == 'p3') {
+            setState(() => activeScreen = thirdscreen);
+          } else if (itemId == 'p4') {
+            setState(() => activeScreen = fourthscreen);
+          }
+        },
       ),
     );
   }
